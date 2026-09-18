@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dpyy5pvc08lsv"]
 
+[ext_resource type="Script" uid="uid://bps0ts0vwnhup" path="res://scripts/Level.cs" id="1_k0juu"]
 [ext_resource type="PackedScene" uid="uid://bm0bbx5r0j31p" path="res://scenes/player.tscn" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://debcy8twx1k1l" path="res://assets/icon.svg" id="2_rwgxs"]
 [ext_resource type="Script" uid="uid://b4pd55okl2ikl" path="res://scripts/Creature.cs" id="3_4wyf3"]
@@ -10,7 +11,13 @@ size = Vector2(2687, 723)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gti72"]
 size = Vector2(80, 80)
 
-[node name="World" type="Node2D" unique_id=1382975217]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aig1"]
+size = Vector2(108.072495, 300)
+
+[node name="World" type="Node2D" unique_id=1382975217 node_paths=PackedStringArray("WinArea")]
+script = ExtResource("1_k0juu")
+WinArea = NodePath("WinArea")
+NextLevel = ExtResource("1_nnsk1")
 
 [node name="Player" parent="." unique_id=394239134 instance=ExtResource("1_nnsk1")]
 position = Vector2(0, -411)
@@ -71,3 +78,12 @@ shape = SubResource("RectangleShape2D_gti72")
 [node name="Sprite2D" type="Sprite2D" parent="Creature2/CollisionShape2D" unique_id=1652241088]
 scale = Vector2(0.69, 0.672)
 texture = ExtResource("2_rwgxs")
+
+[node name="WinArea" type="Area2D" parent="." unique_id=2003833016]
+position = Vector2(1286, -101)
+collision_layer = 15
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinArea" unique_id=2067064345]
+position = Vector2(37.963745, 0)
+shape = SubResource("RectangleShape2D_6aig1")
