@@ -2,9 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://bm0bbx5r0j31p" path="res://scenes/player.tscn" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://debcy8twx1k1l" path="res://assets/icon.svg" id="2_rwgxs"]
+[ext_resource type="Script" uid="uid://b4pd55okl2ikl" path="res://scripts/Creature.cs" id="3_4wyf3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
 size = Vector2(2687, 723)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gti72"]
+size = Vector2(80, 80)
 
 [node name="World" type="Node2D" unique_id=1382975217]
 
@@ -12,6 +16,8 @@ size = Vector2(2687, 723)
 position = Vector2(0, -411)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1247473841]
+collision_layer = 15
+collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=714664456]
 position = Vector2(13.5, 351.5)
@@ -19,4 +25,49 @@ shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D" unique_id=1207829236]
 scale = Vector2(20.97, 5.61)
+texture = ExtResource("2_rwgxs")
+
+[node name="Creature" type="CharacterBody2D" parent="." unique_id=1720173810]
+position = Vector2(4, -141)
+collision_layer = 4
+script = ExtResource("3_4wyf3")
+metadata/_custom_type_script = "uid://b4pd55okl2ikl"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creature" unique_id=1262497622]
+shape = SubResource("RectangleShape2D_gti72")
+
+[node name="Sprite2D" type="Sprite2D" parent="Creature/CollisionShape2D" unique_id=1359422195]
+scale = Vector2(0.69, 0.672)
+texture = ExtResource("2_rwgxs")
+
+[node name="Creature3" type="CharacterBody2D" parent="." unique_id=616325570]
+position = Vector2(-507, -81)
+collision_layer = 4
+script = ExtResource("3_4wyf3")
+Speed = 200.0
+JumpVelocity = 1000.0
+SizeX = 0.8
+SizeY = 0.8
+metadata/_custom_type_script = "uid://b4pd55okl2ikl"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creature3" unique_id=94185782]
+shape = SubResource("RectangleShape2D_gti72")
+
+[node name="Sprite2D" type="Sprite2D" parent="Creature3/CollisionShape2D" unique_id=749276951]
+scale = Vector2(0.69, 0.672)
+texture = ExtResource("2_rwgxs")
+
+[node name="Creature2" type="CharacterBody2D" parent="." unique_id=1319504856]
+position = Vector2(407, -96)
+collision_layer = 4
+script = ExtResource("3_4wyf3")
+Speed = 50.0
+SizeX = 6.58
+metadata/_custom_type_script = "uid://b4pd55okl2ikl"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creature2" unique_id=1110799274]
+shape = SubResource("RectangleShape2D_gti72")
+
+[node name="Sprite2D" type="Sprite2D" parent="Creature2/CollisionShape2D" unique_id=1652241088]
+scale = Vector2(0.69, 0.672)
 texture = ExtResource("2_rwgxs")

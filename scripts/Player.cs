@@ -48,4 +48,16 @@ public partial class Player : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+
+	private void OnHitboxBodyEntered(Node2D body)
+	{
+		if (body is Creature creature)
+		{
+			// set creature parameters
+			Speed = creature.GetSpeed();
+			JumpVelocity = creature.GetJumpVelocity();
+			SizeX = creature.GetSizeX();
+			SizeY = creature.GetSizeY();
+		}
+	}
 }
