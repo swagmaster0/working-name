@@ -9,6 +9,9 @@ public partial class Player : CharacterBody2D
 	[Export] private float SizeY = 1.0f; 
 	[Export] private bool CanClimb = false;
 
+	[ExportGroup("Nodes")]
+	[Export] private Control GameOverLabel;
+
 	private const float DEFAULT_SPEED = 220.0f;
 	private const float DEFAULT_JUMP_VELOCITY = 400.0f;
 
@@ -17,11 +20,34 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 
+		if (Input.IsActionJustPressed("pause"))
+		{
+			RestartLevel();
+			return;
+		}
+
+		if (SizeX == 0 || SizeY == 0)
+		{
+			Speed = 0;
+			JumpVelocity = 0;
+			Hide();
+		}
+
+		if (Speed == 0 && JumpVelocity == 0)
+		{
+			GameOverLabel.Show();
+			return;
+		}
+
+		GameOverLabel.Hide();
+
+
 		// adjust sizing
 		Vector2 size = Scale;
 		size.X = SizeX;
 		size.Y = SizeY;
 		Scale = size;
+
 
 		if (MotionMode is MotionModeEnum.Grounded)
 		{
@@ -100,5 +126,10 @@ public partial class Player : CharacterBody2D
 		else MotionMode = MotionModeEnum.Floating;
 
 		CanClimb = creature.CanClimb();
+	}
+
+	private void RestartLevel()
+	{
+		GetTree().ReloadCurrentScene();
 	}
 }
