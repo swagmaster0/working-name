@@ -9,19 +9,56 @@ public partial class Player : CharacterBody2D
 	[Export] private float SizeY = 1.0f; 
 	[Export] private bool CanClimb = false;
 
+	[ExportGroup("Nodes")]
+	[Export] private Control GameOverLabel;
+	[Export] private Control PauseMenu;
+
 	private const float DEFAULT_SPEED = 220.0f;
 	private const float DEFAULT_JUMP_VELOCITY = 400.0f;
+
+
+	public override void _Ready()
+	{
+		GetTree().Paused = false;
+		PauseMenu.Hide();
+	}
 
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
 
+		if (Input.IsActionJustPressed("pause"))
+		{
+			//RestartLevel();
+			TogglePauseMenuVisible();
+			return;
+		}
+
+		if (PauseMenu.Visible) return;
+
+		if (SizeX == 0 || SizeY == 0)
+		{
+			Speed = 0;
+			JumpVelocity = 0;
+			Hide();
+		}
+
+		if (Speed == 0 && JumpVelocity == 0)
+		{
+			GameOverLabel.Show();
+			return;
+		}
+
+		GameOverLabel.Hide();
+
+
 		// adjust sizing
 		Vector2 size = Scale;
 		size.X = SizeX;
 		size.Y = SizeY;
 		Scale = size;
+
 
 		if (MotionMode is MotionModeEnum.Grounded)
 		{
@@ -100,5 +137,30 @@ public partial class Player : CharacterBody2D
 		else MotionMode = MotionModeEnum.Floating;
 
 		CanClimb = creature.CanClimb();
+	}
+
+	private void TogglePauseMenuVisible()
+	{
+		if (PauseMenu.Visible)
+		{
+			PauseMenu.Hide();
+			GetTree().Paused = false;
+		}
+		else
+		{
+			PauseMenu.Show();
+			GetTree().Paused = true;
+		}
+	}
+
+	private void RestartLevel()
+	{
+		GetTree().Paused = false;
+		GetTree().ReloadCurrentScene();
+	}
+
+	private void QuitGame()
+	{
+		GetTree().Quit();
 	}
 }
