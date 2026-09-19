@@ -3,38 +3,23 @@ using System;
 
 public partial class Spider : Creature
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
+	private Vector2 _fixedCeilingPosition;
+
+	public override void _Ready()
+	{
+		// Tells Godot to run the original script's setup first
+		base._Ready();
+
+		// Saves the exact position you placed the spider in the editor
+		_fixedCeilingPosition = GlobalPosition;
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
+		// Tells Godot to run the original script's physics loop
+		base._PhysicsProcess(delta);
 
-		// Add the gravity.
-		if (!IsOnFloor())
-		{
-			velocity += GetGravity() * (float)delta;
-		}
-
-		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-		{
-			velocity.Y = JumpVelocity;
-		}
-
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		if (direction != Vector2.Zero)
-		{
-			velocity.X = direction.X * Speed;
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-		}
-
-		Velocity = velocity;
-		MoveAndSlide();
+		// Forces the spider back to the ceiling after the original script tries to drop it
+		GlobalPosition = _fixedCeilingPosition;
 	}
 }
