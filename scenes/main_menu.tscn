@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dd4ggyjb4u1dl" path="res://scripts/MainMenu.cs" id="1_l6cm7"]
 [ext_resource type="PackedScene" uid="uid://dpyy5pvc08lsv" path="res://scenes/debug_level.tscn" id="2_ekxnf"]
 
-[node name="MainMenu" type="Control" unique_id=1480156090]
+[node name="MainMenu" type="Control" unique_id=1480156090 node_paths=PackedStringArray("PlayButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
+PlayButton = NodePath("Button")
 FirstLevel = ExtResource("2_ekxnf")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1797431632]
