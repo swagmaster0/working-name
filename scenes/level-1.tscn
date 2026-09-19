@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b3rokv3xttwxt" path="res://assets/tileset_1bit.png" id="2_w8wmq"]
 [ext_resource type="PackedScene" uid="uid://bm0bbx5r0j31p" path="res://scenes/player.tscn" id="3_67dni"]
 [ext_resource type="Script" uid="uid://b4pd55okl2ikl" path="res://scripts/Creature.cs" id="4_b6r43"]
+[ext_resource type="Texture2D" uid="uid://f21p2n6la0wm" path="res://assets/sausage_dog.png" id="5_b6r43"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b6r43"]
 texture = ExtResource("2_w8wmq")
@@ -77,6 +78,9 @@ texture = ExtResource("2_w8wmq")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_b6r43")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvygq"]
+size = Vector2(88, 48)
+
 [node name="Level" type="Node2D" unique_id=1586094857]
 script = ExtResource("1_u2qxb")
 metadata/_custom_type_script = "uid://bps0ts0vwnhup"
@@ -93,9 +97,17 @@ tile_set = SubResource("TileSet_dvygq")
 position = Vector2(67, 615)
 
 [node name="Creature" type="CharacterBody2D" parent="." unique_id=631523952]
+collision_layer = 0
 script = ExtResource("4_b6r43")
 metadata/_custom_type_script = "uid://b4pd55okl2ikl"
 
-[node name="Hitbox" type="Area2D" parent="Creature" unique_id=2020565180]
+[node name="Area2D" type="Area2D" parent="Creature" unique_id=97320518]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Creature/Hitbox" unique_id=61735781]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creature/Area2D" unique_id=575111726]
+position = Vector2(295, 646)
+shape = SubResource("RectangleShape2D_dvygq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Creature/Area2D/CollisionShape2D" unique_id=823787205]
+position = Vector2(3, -9)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_b6r43")
