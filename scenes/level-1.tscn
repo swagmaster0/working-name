@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bm0bbx5r0j31p" path="res://scenes/player.tscn" id="3_67dni"]
 [ext_resource type="Script" uid="uid://b4pd55okl2ikl" path="res://scripts/Creature.cs" id="4_b6r43"]
 [ext_resource type="Texture2D" uid="uid://f21p2n6la0wm" path="res://assets/sausage_dog.png" id="5_b6r43"]
+[ext_resource type="Texture2D" uid="uid://debcy8twx1k1l" path="res://assets/icon.svg" id="6_0jp7s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b6r43"]
 texture = ExtResource("2_w8wmq")
@@ -79,7 +80,10 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_b6r43")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvygq"]
-size = Vector2(88, 48)
+size = Vector2(51.5, 54.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jp7s"]
+size = Vector2(51.5, 295.5)
 
 [node name="Level" type="Node2D" unique_id=1586094857]
 script = ExtResource("1_u2qxb")
@@ -94,20 +98,36 @@ tile_map_data = PackedByteArray("AAAAAA4AAAAAAAAAAAAEAA4AAAAAAAAAAAAFAA4AAAAAAAA
 tile_set = SubResource("TileSet_dvygq")
 
 [node name="Player" parent="." unique_id=394239134 instance=ExtResource("3_67dni")]
-position = Vector2(67, 615)
+position = Vector2(66, 618)
 
-[node name="Creature" type="CharacterBody2D" parent="." unique_id=631523952]
-collision_layer = 0
+[node name="sasauge_dog" type="CharacterBody2D" parent="." unique_id=631523952]
 script = ExtResource("4_b6r43")
+SizeX = 3.0
+SizeY = 0.5
 metadata/_custom_type_script = "uid://b4pd55okl2ikl"
 
-[node name="Area2D" type="Area2D" parent="Creature" unique_id=97320518]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Creature/Area2D" unique_id=575111726]
-position = Vector2(295, 646)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sasauge_dog" unique_id=575111726]
+position = Vector2(295, 646.5)
 shape = SubResource("RectangleShape2D_dvygq")
+one_way_collision = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Creature/Area2D/CollisionShape2D" unique_id=823787205]
+[node name="Sprite2D" type="Sprite2D" parent="sasauge_dog/CollisionShape2D" unique_id=823787205]
 position = Vector2(3, -9)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("5_b6r43")
+
+[node name="giraffe" type="CharacterBody2D" parent="." unique_id=84720001]
+position = Vector2(415, 37)
+script = ExtResource("4_b6r43")
+SizeY = 3.0
+metadata/_custom_type_script = "uid://b4pd55okl2ikl"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="giraffe" unique_id=1542127049]
+position = Vector2(632, 486)
+shape = SubResource("RectangleShape2D_0jp7s")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="giraffe/CollisionShape2D" unique_id=1168228248]
+position = Vector2(2, -53.700016)
+scale = Vector2(0.5624997, 3.129687)
+texture = ExtResource("6_0jp7s")
