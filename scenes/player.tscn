@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://bm0bbx5r0j31p"]
 
 [ext_resource type="Script" uid="uid://c74iiukdox7nn" path="res://scripts/Player.cs" id="1_3vyb7"]
-[ext_resource type="Texture2D" uid="uid://debcy8twx1k1l" path="res://assets/icon.svg" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://bphj40r5d6aaw" path="res://assets/businessman.png" id="2_g2els"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gti72"]
-radius = 33.45
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jp7s"]
+size = Vector2(53, 134)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6aig1"]
-radius = 29.1
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8l2fk"]
+size = Vector2(52, 134)
 
 [node name="Player" type="CharacterBody2D" unique_id=394239134 node_paths=PackedStringArray("GameOverLabel", "PauseMenu")]
 process_mode = 3
@@ -17,10 +17,12 @@ GameOverLabel = NodePath("CanvasLayer/HUD/GameOverLabel")
 PauseMenu = NodePath("CanvasLayer/HUD/PauseMenu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=413795172]
-shape = SubResource("CircleShape2D_gti72")
+position = Vector2(23, -11)
+shape = SubResource("RectangleShape2D_0jp7s")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D" unique_id=1207045228]
-scale = Vector2(0.5, 0.5)
+position = Vector2(3, -19)
+scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_g2els")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=745648265]
@@ -28,7 +30,8 @@ collision_layer = 15
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1515234019]
-shape = SubResource("CircleShape2D_6aig1")
+position = Vector2(23, -11)
+shape = SubResource("RectangleShape2D_8l2fk")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=46749967]
 
