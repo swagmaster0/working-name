@@ -9,9 +9,12 @@ radius = 33.45
 [sub_resource type="CircleShape2D" id="CircleShape2D_6aig1"]
 radius = 29.1
 
-[node name="Player" type="CharacterBody2D" unique_id=394239134]
+[node name="Player" type="CharacterBody2D" unique_id=394239134 node_paths=PackedStringArray("GameOverLabel", "PauseMenu")]
+process_mode = 3
 collision_layer = 2
 script = ExtResource("1_3vyb7")
+GameOverLabel = NodePath("CanvasLayer/HUD/GameOverLabel")
+PauseMenu = NodePath("CanvasLayer/HUD/PauseMenu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=413795172]
 shape = SubResource("CircleShape2D_gti72")
@@ -20,8 +23,6 @@ shape = SubResource("CircleShape2D_gti72")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_g2els")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1360083426]
-
 [node name="Hitbox" type="Area2D" parent="." unique_id=745648265]
 collision_layer = 15
 collision_mask = 15
@@ -29,4 +30,73 @@ collision_mask = 15
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1515234019]
 shape = SubResource("CircleShape2D_6aig1")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=46749967]
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=1165967967]
+top_level = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="CanvasLayer/HUD" unique_id=754845183]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -73.0
+offset_right = 354.0
+offset_bottom = -50.0
+grow_vertical = 0
+text = "GAME OVER. Use Escape to restart level"
+
+[node name="PauseMenu" type="Control" parent="CanvasLayer/HUD" unique_id=156481733]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/HUD/PauseMenu" unique_id=195112578]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.57254905)
+
+[node name="Menu" type="VBoxContainer" parent="CanvasLayer/HUD/PauseMenu" unique_id=1920178074]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -33.0
+offset_right = 35.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/HUD/PauseMenu/Menu" unique_id=1810166524]
+layout_mode = 2
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/HUD/PauseMenu/Menu" unique_id=124275806]
+layout_mode = 2
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/HUD/PauseMenu/Menu" unique_id=1099089974]
+layout_mode = 2
+text = "Quit"
+
 [connection signal="body_entered" from="Hitbox" to="." method="OnHitboxBodyEntered"]
+[connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/Menu/ResumeButton" to="." method="TogglePauseMenuVisible"]
+[connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/Menu/RestartButton" to="." method="RestartLevel"]
+[connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/Menu/QuitButton" to="." method="QuitGame"]
