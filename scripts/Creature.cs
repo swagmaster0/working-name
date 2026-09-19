@@ -9,6 +9,7 @@ public partial class Creature : CharacterBody2D
 	[Export] private float SizeX = 1.0f;
 	[Export] private float SizeY = 1.0f;
 	[Export] private bool AdhereToGravity = true;
+	[Export] private bool Climbable = false;
 
 
 	public override void _PhysicsProcess(double delta)
@@ -29,5 +30,6 @@ public partial class Creature : CharacterBody2D
 	public float GetSizeX() { return SizeX; }
 	public float GetSizeY() { return SizeY; }
 	public bool IsAdheringToGravity() { return AdhereToGravity; }
+	public bool CanClimb() { return Climbable; }
 
 }

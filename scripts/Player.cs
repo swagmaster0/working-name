@@ -7,6 +7,7 @@ public partial class Player : CharacterBody2D
 	[Export] private float JumpVelocity = DEFAULT_JUMP_VELOCITY;
 	[Export] private float SizeX = 1.0f;
 	[Export] private float SizeY = 1.0f; 
+	[Export] private bool CanClimb = false;
 
 	private const float DEFAULT_SPEED = 220.0f;
 	private const float DEFAULT_JUMP_VELOCITY = 400.0f;
@@ -57,6 +58,19 @@ public partial class Player : CharacterBody2D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 		}
 
+		if (CanClimb)
+		{
+			KinematicCollision2D collision = GetLastSlideCollision();
+			if (collision == null || !IsInstanceValid(collision)) return velocity;
+
+			float dot = collision.GetNormal().Dot(direction.Normalized());
+			if (dot <= -0.8f && Mathf.Abs(direction.Dot(Vector2.Up)) < 0.75)
+			{
+				velocity = Vector2.Up * Speed;
+			}
+		}
+
+
 		return velocity;
 	}
 
@@ -71,17 +85,20 @@ public partial class Player : CharacterBody2D
 
 	private void OnHitboxBodyEntered(Node2D body)
 	{
-		if (body is Creature creature)
-		{
-			// set creature parameters
-			Speed = creature.GetSpeed();
-			JumpVelocity = creature.GetJumpVelocity();
-			SizeX = creature.GetSizeX();
-			SizeY = creature.GetSizeY();
+		if (body is Creature creature) SetParametersToCreature(creature);
+	}
 
-			if (creature.IsAdheringToGravity()) MotionMode = MotionModeEnum.Grounded;
-			else MotionMode = MotionModeEnum.Floating;
+	private void SetParametersToCreature(Creature creature)
+	{
+		// set creature parameters
+		Speed = creature.GetSpeed();
+		JumpVelocity = creature.GetJumpVelocity();
+		SizeX = creature.GetSizeX();
+		SizeY = creature.GetSizeY();
 
-		}
+		if (creature.IsAdheringToGravity()) MotionMode = MotionModeEnum.Grounded;
+		else MotionMode = MotionModeEnum.Floating;
+
+		CanClimb = creature.CanClimb();
 	}
 }
