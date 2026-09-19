@@ -18,10 +18,13 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (!IsNodeReady() || !IsInsideTree() || IsQueuedForDeletion()) return;
 		Vector2 velocity = Velocity;
 
-		if (Input.IsActionJustPressed("pause")) RestartLevel();
+		if (Input.IsActionJustPressed("pause"))
+		{
+			RestartLevel();
+			return;
+		}
 
 		if (SizeX == 0 || SizeY == 0)
 		{
