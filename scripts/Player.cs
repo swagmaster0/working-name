@@ -16,25 +16,37 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 
+		// adjust sizing
 		Vector2 size = Scale;
 		size.X = SizeX;
 		size.Y = SizeY;
 		Scale = size;
 
-		// Add the gravity.
-		if (!IsOnFloor())
+		if (MotionMode is MotionModeEnum.Grounded)
 		{
-			velocity += GetGravity() * (float)delta;
+			velocity = GetVelocityForGroundedMovement(velocity, (float)delta);
+		}
+		else
+		{
+			velocity = GetVelocityForFloatingMovement(velocity, (float)delta);
 		}
 
-		// Handle Jump.
+		Velocity = velocity;
+		MoveAndSlide();
+	}
+
+	private Vector2 GetVelocityForGroundedMovement(Vector2 velocity, float delta)
+	{
+		if (!IsOnFloor())
+		{
+			velocity += GetGravity() * delta;
+		}
+
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())
 		{
 			velocity.Y = -JumpVelocity;
 		}
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		if (direction != Vector2.Zero)
 		{
@@ -45,9 +57,17 @@ public partial class Player : CharacterBody2D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 		}
 
-		Velocity = velocity;
-		MoveAndSlide();
+		return velocity;
 	}
+
+	private Vector2 GetVelocityForFloatingMovement(Vector2 velocity, float delta)
+	{
+		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		velocity = direction * Speed;
+
+		return velocity;
+	}
+
 
 	private void OnHitboxBodyEntered(Node2D body)
 	{
@@ -58,6 +78,10 @@ public partial class Player : CharacterBody2D
 			JumpVelocity = creature.GetJumpVelocity();
 			SizeX = creature.GetSizeX();
 			SizeY = creature.GetSizeY();
+
+			if (creature.IsAdheringToGravity()) MotionMode = MotionModeEnum.Grounded;
+			else MotionMode = MotionModeEnum.Floating;
+
 		}
 	}
 }
