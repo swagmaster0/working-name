@@ -8,8 +8,8 @@ public partial class Player : CharacterBody2D
 	[Export] private float SizeX = 1.0f;
 	[Export] private float SizeY = 1.0f; 
 
-	private const float DEFAULT_SPEED = 100.0f;
-	private const float DEFAULT_JUMP_VELOCITY = 300.0f;
+	private const float DEFAULT_SPEED = 220.0f;
+	private const float DEFAULT_JUMP_VELOCITY = 400.0f;
 
 
 	public override void _PhysicsProcess(double delta)
@@ -28,14 +28,14 @@ public partial class Player : CharacterBody2D
 		}
 
 		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+		if (Input.IsActionJustPressed("jump") && IsOnFloor())
 		{
 			velocity.Y = -JumpVelocity;
 		}
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		if (direction != Vector2.Zero)
 		{
 			velocity.X = direction.X * Speed;
