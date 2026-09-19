@@ -83,7 +83,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_b6r43")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dvygq"]
-size = Vector2(51.5, 54.75)
+size = Vector2(530.74994, 243.16992)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0jp7s"]
 size = Vector2(51.5, 299.8125)
@@ -112,16 +112,16 @@ tile_set = SubResource("TileSet_dvygq")
 position = Vector2(74, -61)
 
 [node name="sasauge_dog" type="CharacterBody2D" parent="." unique_id=631523952]
-position = Vector2(-37, -5)
+position = Vector2(106, 407)
+scale = Vector2(0.305, 0.305)
 script = ExtResource("4_b6r43")
 SizeX = 3.0
 SizeY = 0.5
 metadata/_custom_type_script = "uid://b4pd55okl2ikl"
 metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sasauge_dog" unique_id=575111726]
-position = Vector2(295, 646.5)
+position = Vector2(534.62494, 740.7097)
 shape = SubResource("RectangleShape2D_dvygq")
 one_way_collision = true
 
