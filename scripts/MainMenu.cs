@@ -3,11 +3,13 @@ using System;
 
 public partial class MainMenu : Control
 {
+	[Export] private Label TitleLabel;
 	[Export] private Button PlayButton;
 	[Export] private PackedScene FirstLevel;
 
 	public override void _Ready()
 	{
+		TitleLabel.Text = (string)ProjectSettings.GetSetting("application/config/name");
 		PlayButton.GrabFocus();
 	}
 
@@ -21,5 +23,10 @@ public partial class MainMenu : Control
 		}
 
 		GetTree().ChangeSceneToPacked(FirstLevel);
+	}
+
+	private void OnQuitButtonPressed()
+	{
+		GetTree().Quit();
 	}
 }
