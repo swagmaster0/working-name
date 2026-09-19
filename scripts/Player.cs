@@ -11,9 +11,17 @@ public partial class Player : CharacterBody2D
 
 	[ExportGroup("Nodes")]
 	[Export] private Control GameOverLabel;
+	[Export] private Control PauseMenu;
 
 	private const float DEFAULT_SPEED = 220.0f;
 	private const float DEFAULT_JUMP_VELOCITY = 400.0f;
+
+
+	public override void _Ready()
+	{
+		GetTree().Paused = false;
+		PauseMenu.Hide();
+	}
 
 
 	public override void _PhysicsProcess(double delta)
@@ -22,9 +30,12 @@ public partial class Player : CharacterBody2D
 
 		if (Input.IsActionJustPressed("pause"))
 		{
-			RestartLevel();
+			//RestartLevel();
+			TogglePauseMenuVisible();
 			return;
 		}
+
+		if (PauseMenu.Visible) return;
 
 		if (SizeX == 0 || SizeY == 0)
 		{
@@ -128,8 +139,28 @@ public partial class Player : CharacterBody2D
 		CanClimb = creature.CanClimb();
 	}
 
+	private void TogglePauseMenuVisible()
+	{
+		if (PauseMenu.Visible)
+		{
+			PauseMenu.Hide();
+			GetTree().Paused = false;
+		}
+		else
+		{
+			PauseMenu.Show();
+			GetTree().Paused = true;
+		}
+	}
+
 	private void RestartLevel()
 	{
+		GetTree().Paused = false;
 		GetTree().ReloadCurrentScene();
+	}
+
+	private void QuitGame()
+	{
+		GetTree().Quit();
 	}
 }
